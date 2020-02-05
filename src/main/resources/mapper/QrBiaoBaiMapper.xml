@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanlisky.api.mapper.QrBiaoBaiMapper" >
+  <resultMap id="BaseResultMap" type="cn.fanlisky.api.domain.QrBiaoBai" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="me" property="me" jdbcType="VARCHAR" />
+    <result column="you" property="you" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="uptime" property="uptime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, content, qq, me, you, addtime, uptime
+  </sql>
+  <select id="selectAll" resultType="cn.fanlisky.api.domain.QrBiaoBai">
+      select <include refid="Base_Column_List"/>
+      from qr_biaobai
+  </select>
+
+</mapper>

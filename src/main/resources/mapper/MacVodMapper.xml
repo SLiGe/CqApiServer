@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanlisky.api.mapper.MacVodMapper">
+
+    <sql id="Base_Column_List">
+        vod_id,
+        type_id,
+        type_id_1,
+        group_id,
+        vod_name,
+        vod_sub,
+        vod_en,
+        vod_status,
+        vod_letter,
+        vod_color,
+        vod_tag,
+        vod_class,
+        vod_pic,
+        vod_pic_thumb,
+        vod_pic_slide,
+        vod_actor,
+        vod_director,
+        vod_writer,
+        vod_blurb,
+        vod_remarks,
+        vod_pubdate,
+        vod_total,
+        vod_serial,
+        vod_tv,
+        vod_weekday,
+        vod_area,
+        vod_lang,
+        vod_year,
+        vod_version,
+        vod_state,
+        vod_author,
+        vod_jumpurl,
+        vod_tpl,
+        vod_tpl_play,
+        vod_tpl_down,
+        vod_isend,
+        vod_lock,
+        vod_level,
+        vod_points_play,
+        vod_points_down,
+        vod_hits,
+        vod_hits_day,
+        vod_hits_week,
+        vod_hits_month,
+        vod_duration,
+        vod_up,
+        vod_down,
+        vod_score,
+        vod_score_all,
+        vod_score_num,
+        vod_time,
+        vod_time_add,
+        vod_time_hits,
+        vod_time_make,
+        vod_trysee,
+        vod_douban_id,
+        vod_douban_score,
+        vod_reurl,
+        vod_rel_vod,
+        vod_rel_art,
+        vod_play_from,
+        vod_play_server,
+        vod_play_note,
+        vod_down_from,
+        vod_down_server,
+        vod_down_note
+    </sql>
+    <sql id="Blob_Column_List">
+        vod_content,
+        vod_play_url,
+        vod_down_url
+    </sql>
+    <resultMap id="moviesDetail" type="cn.fanlisky.api.model.response.FindMoviesResponse">
+        <result column="vod_id" property="filmUrl"/>
+        <result column="vod_name" property="filmName"/>
+    </resultMap>
+    <parameterMap id="findMovieByName" type="cn.fanlisky.api.model.request.FindMoviesRequest">
+        <parameter property="movieName" javaType="string"/>
+        <parameter property="pageSize" javaType="string"/>
+    </parameterMap>
+    <select id="selectByMovieName" resultMap="moviesDetail" parameterMap="findMovieByName">
+        SELECT vod_id,vod_name
+        FROM mac_vod
+        WHERE vod_name LIKE CONCAT('%', #{movieName}, '%')
+    </select>
+
+    <select id="getRecommendFilm" parameterType="integer" resultType="cn.fanlisky.api.domain.RecommendMovie">
+        SELECT
+            vod_name  name,
+            vod_pic   pic,
+            vod_blurb detail,
+            vod_actor actor,
+            vod_id    link
+        FROM mac_vod
+        WHERE vod_id = #{id}
+    </select>
+
+    <select id="getMovieByName" parameterType="string" resultType="cn.fanlisky.api.domain.RecommendMovie">
+        SELECT
+            vod_name  name,
+            vod_pic   pic,
+            vod_blurb detail,
+            vod_id    link
+        FROM mac_vod
+        WHERE vod_name LIKE CONCAT('%', #{movieName}, '%')
+        LIMIT 1
+    </select>
+
+</mapper>

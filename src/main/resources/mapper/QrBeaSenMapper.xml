@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanlisky.api.mapper.QrBeaSenMapper" >
+  <resultMap id="BaseResultMap" type="cn.fanlisky.api.domain.QrBeaSen" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sentence" property="sentence" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sentence
+  </sql>
+    <select id="count" resultType="java.lang.Integer">
+      select count(1) from qr_beasen where 1=1
+  <if test="id != null and id != ''">
+    and  id = #{id}
+  </if>
+
+    </select>
+
+
+</mapper>

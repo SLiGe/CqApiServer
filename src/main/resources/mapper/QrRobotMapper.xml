@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanlisky.api.mapper.QrRobotMapper">
+    <resultMap id="BaseResultMap" type="cn.fanlisky.api.domain.QrRobot">
+        <result column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="client_qq" property="clientQq" jdbcType="VARCHAR"/>
+        <result column="robot_qq" property="robotQq" jdbcType="VARCHAR"/>
+        <result column="group_num" property="groupNum" jdbcType="VARCHAR"/>
+        <result column="start_date" property="startDate" jdbcType="TIMESTAMP"/>
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="getAuthEnd" resultMap="BaseResultMap">
+        SELECT id,
+               client_qq,
+               robot_qq,
+               group_num,
+               date_format(start_date, '%Y-%m-%d %h:%m:%s') start_date,
+               date_format(end_date, '%Y-%m-%d %h:%m:%s')   end_date
+        FROM qr_robot
+        WHERE end_date &lt; NOW()
+    </select>
+
+</mapper>

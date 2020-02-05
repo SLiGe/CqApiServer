@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fanlisky.api.mapper.QrSignInDataMapper">
+
+    <select id="querySignInData" parameterType="string" resultType="cn.fanlisky.api.model.response.GetSignInDataResponse">
+        SELECT
+            qda.QQ       qq,
+            qda.INTEGRAL integral,
+            qsd.MDAYS    mDays,
+            qsd.TDAYS    tDays,
+            (SELECT
+                 qsl.`level`
+             FROM
+                 qr_signIn_level qsl
+             WHERE
+                 qsl.INTEGRAL &lt;= qda.INTEGRAL
+             ORDER BY
+                 qsl.INTEGRAL DESC
+             LIMIT 1)    qLevel
+        FROM
+            qr_signIn_data qda
+                LEFT JOIN qr_signIn_days qsd ON qda.QQ = qsd.QQ
+        WHERE qda.QQ = #{qq}
+    </select>
+    <select id="getSignList" resultType="cn.fanlisky.api.model.response.GetSignInDataResponse">
+        SELECT
+        qda.ID id,
+        qda.QQ qq,
+        qda.INTEGRAL integral,
+        qsd.MDAYS mDays,
+        qsd.TDAYS tDays,
+        (SELECT
+        qsl.`level`
+        FROM
+        qr_signIn_level qsl
+        WHERE
+        qsl.INTEGRAL &lt;= qda.INTEGRAL
+        ORDER BY
+        qsl.INTEGRAL DESC
+        LIMIT 1 ) qLevel
+        FROM
+        qr_signIn_data qda
+        LEFT JOIN qr_signIn_days qsd ON qda.QQ = qsd.QQ
+        where 1 =1
+        <if test="qq != null and qq != ''">
+            and qda.QQ = #{qq}
+        </if>
+        <if test="days != null and days != ''">
+            and qsd.MDAYS &gt;= #{days}
+        </if>
+        <if test="startDate != null and startDate != ''">
+            and qda.CREATE_DATE >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and qda.CREATE_DATE &lt;= #{endDate}
+        </if>
+    </select>
+</mapper>

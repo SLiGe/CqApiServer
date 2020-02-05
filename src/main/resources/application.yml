@@ -1,0 +1,73 @@
+server:
+  port: 8081
+  tomcat:
+    max-threads: 800
+    min-spare-threads: 30
+spring:
+  redis:
+    database: 0
+    host: 192.168.137.3
+    password: 123456
+    port: 6379
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 100
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      master:
+        name: niurensec
+        url: jdbc:mysql://192.168.137.3:3306/niurensec?useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      slave:
+        name: qrmovie_cn
+        url: jdbc:mysql://192.168.137.3:3306/qrmovie_cn?serverTimezone=UTC
+        username: root
+        password: 123456
+        enabled: true
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      filters: stat
+      maxActive: 20
+      initialSize: 5
+      maxWait: 60000
+      minIdle: 10
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      maxEvictableIdleTimeMillis: 900000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      stat-view-servlet:
+        login-username: root
+        login-password: root
+        enabled: true
+        url-pattern: /druid/*
+  rabbitmq:
+    host: 192.168.137.3
+    username: guest
+    password: guest
+    virtual-host: my_vhost
+    port: 5672
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  #mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: cn.fanlisky.api.domain
+logging:
+  level:
+    cn.fanlisky.api.mapper: debug
