@@ -1,4 +1,4 @@
-# 牛人互联网API平台
+# CqApiServer平台
 
 **This is a entertaining project.**
 
