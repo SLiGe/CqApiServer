@@ -158,7 +158,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>LATEST</version>
+            <version>1.14.2</version>
         </dependency>
         <!-- 结巴分词 -->
         <dependency>
